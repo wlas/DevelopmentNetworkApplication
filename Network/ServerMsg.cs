@@ -9,25 +9,32 @@ namespace Network
         TcpListener server;
         string _from;
         string _to;
+        bool _work = true;
+
         public ServerMsg(string from, string to) 
         {
-            _from = from;
-            _to = to;
-            server = new TcpListener(IPAddress.Parse("127.0.0.1"), 5555);
-            server.Start();
+            try
+            {
+                _from = from;
+                _to = to;
+                server = new TcpListener(IPAddress.Parse("127.0.0.1"), 5555);
+                server.Start();
 
-            LoopClients();
+                LoopClients();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+            }
+            
         }       
 
         void LoopClients()
-        {
-            while (true)
-            {
+        {           
                 TcpClient client = server.AcceptTcpClient();
-
                 Thread thread = new Thread(() => HandleClient(client));
                 thread.Start();
-            }
         }
 
         void HandleClient(TcpClient client)
@@ -37,11 +44,18 @@ namespace Network
             
             Console.WriteLine("Сервер ждет сообщение от клиента: ");
 
-            while (true)
+            while (_work)
             {
-                SenderMsg.Receive(sReader);
+                _work = SenderMsg.Receive(sReader);
 
-                SenderMsg.Send(_from, _to, sWriter);
+                if(_work)
+                {
+                    SenderMsg.Send(_from, _to, sWriter);
+                }
+                else
+                {
+                    Console.WriteLine("Завершение работы сервера.");
+                }
             }
         }
     }

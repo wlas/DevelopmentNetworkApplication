@@ -21,11 +21,17 @@
                 sWriter.Flush();                
             
         }
-        public static void Receive(StreamReader sReader)
+        public static bool Receive(StreamReader sReader)
         {
             string answerServer = sReader.ReadLine();
             Message messageIn = Message.DeserializeFromJson(answerServer);
+            if (messageIn.Text.Equals("exit", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine($"Сервер получил ключевое слово shutdown \"Exit\" от клиента, сеанс чата будет закрыт.");
+                return false;
+            }
             messageIn.Print();
+            return true;
         }
     }
 }
