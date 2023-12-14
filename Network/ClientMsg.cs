@@ -1,5 +1,5 @@
-﻿using System.Net.Sockets;
-using System.Text;
+﻿using System.Net;
+using System.Net.Sockets;
 
 namespace Network
 {
@@ -9,14 +9,14 @@ namespace Network
         {
             try 
             {
-                var client = new TcpClient("127.0.0.1", 5555);
-                var sWriter = new StreamWriter(client.GetStream(), Encoding.UTF8);
-                var sReader = new StreamReader(client.GetStream(), Encoding.UTF8);
+                var client = new UdpClient();
+                IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12345);
+
 
                 while (true)
                 {
-                    SenderMsg.Send(from, to, sWriter);
-                    SenderMsg.Receive(sReader);
+                    SenderMsg.Send(from, to, client, ref iPEndPoint);
+                    SenderMsg.Receive(client, ref iPEndPoint);
                 }
             } 
             catch (Exception e) 
