@@ -1,5 +1,6 @@
 ﻿using Network;
 
-Console.WriteLine("Клиент 1.0");
+Console.WriteLine("Клиент 1.3");
 
-ClientMsg clientMsg = new ("Sandr", "Kira");
+var t = Task.Run(() => new ClientMsg("Sandr", "Kira"));
+t.Wait();

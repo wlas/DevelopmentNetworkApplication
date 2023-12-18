@@ -31,10 +31,13 @@ namespace Network
         void LoopClients(IPEndPoint iPEndPoint)
         {
             Console.WriteLine("Сервер ждет сообщение от клиента: ");
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+            CancellationToken token = cancelTokenSource.Token;
+
             while (_work)
             {
                 
-                ThreadPool.QueueUserWorkItem(obj =>
+                Task.Run(() =>
                 {
                     _work = SenderMsg.Receive(udpClient, ref iPEndPoint);
 
@@ -45,8 +48,11 @@ namespace Network
                     else
                     {
                         Console.WriteLine("Завершение работы сервера.");
+                        cancelTokenSource.Cancel();
+                        cancelTokenSource.Dispose();
+                        
                     }
-                });
+                }, token);
             }
         }        
     }
