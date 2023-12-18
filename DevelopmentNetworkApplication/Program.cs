@@ -1,5 +1,6 @@
 ﻿using Network;
 
-Console.WriteLine("Клиет - Сервер 1.0");
+Console.WriteLine("Клиет - Сервер 1.3");
 
-ServerMsg serverMsg = new ServerMsg("Kira", "Sandr");
+var t = Task.Run(() => new ServerMsg("Kira", "Sandr"));
+t.Wait();

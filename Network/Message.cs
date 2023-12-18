@@ -17,7 +17,7 @@ namespace Network
         }
         public override string ToString()
         {
-            return $"{this.DateTime} получено сообщение {this.Text} от {this.NicknameFrom}";
+            return $"{this.DateTime} {this.NicknameFrom}: {this.Text}";
         }
     }
 }
