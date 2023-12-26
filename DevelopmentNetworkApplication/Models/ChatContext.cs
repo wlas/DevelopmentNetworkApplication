@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DevelopmentNetworkApplication
+namespace DevelopmentNetworkApplication.Models
 {
     public class ChatContext : DbContext
     {
@@ -14,7 +14,7 @@ namespace DevelopmentNetworkApplication
 
         public ChatContext(DbContextOptions<ChatContext> dbc) : base(dbc)
         {
-            
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

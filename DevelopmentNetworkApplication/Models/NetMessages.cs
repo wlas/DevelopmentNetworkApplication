@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 
-namespace DevelopmentNetworkApplication
+namespace DevelopmentNetworkApplication.Models
 {
     public enum Command
     {
@@ -15,7 +16,7 @@ namespace DevelopmentNetworkApplication
         public DateTime DateTime { get; set; }
         public string? NickNameFrom { get; set; }
         public string? NickNameTo { get; set; }
-
+        public IPEndPoint? EndPoint { get; set; }
         public Command Command { get; set; }
 
         public string SerialazeMessageToJSON() => JsonSerializer.Serialize(this);
