@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "StartApp": {
+      "commandName": "Project",
+      "commandLineArgs": "Sandr"
+    }
+  }
+}
